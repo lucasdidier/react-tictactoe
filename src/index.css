@@ -16,14 +16,6 @@ body {
   .status {
     margin-bottom: 10px;
   }
-
-  .btn-normal {
-    font-weight: normal;
-  }
-
-  .btn-bold {
-    font-weight: bold;
-  }
   
   .square {
     background: #fff;
