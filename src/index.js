@@ -80,20 +80,27 @@ import './index.css';
           stepNumber: step,
           xIsNext: (step % 2) === 0,
         });
+
     }
 
     render() {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares);
+      const stepNumber = this.state.stepNumber;
 
       const moves = history.map((step, move) => {
         const desc = move ?
-          'Go to move #' + move + ' ' + history[move].location[0] + ',' + history[move].location[1] :
+          (move === stepNumber ?
+          <b> Go to move # {move} </b> :
+          'Go to move #' + move) :
           'Go to game start';
+        const coordinates = move ? 
+          'located at ' + history[move].location[0] + ',' + history[move].location[1] :
+          null;
         return (
           <li key={move}>
-            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+            <button onClick={() => this.jumpTo(move)}>{desc} {coordinates}</button>
           </li>
         );
       });
