@@ -55,6 +55,7 @@ import './index.css';
             }],
             stepNumber: 0,
             xIsNext: true,
+            ascending: true,
         }
     }
 
@@ -82,7 +83,12 @@ import './index.css';
           stepNumber: step,
           xIsNext: (step % 2) === 0,
         });
+    }
 
+    changeSort() {
+        this.setState({
+            ascending: !this.state.ascending,
+        });
     }
 
     render() {
@@ -90,8 +96,12 @@ import './index.css';
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares);
       const stepNumber = this.state.stepNumber;
+      const ascending = this.state.ascending;
 
       const moves = history.map((step, move) => {
+        if (!ascending) {
+            move = (history.length - move - 1);
+        }
         const desc = move ?
           (move === stepNumber ?
           <b> Go to move # {move} </b> :
@@ -110,9 +120,16 @@ import './index.css';
       let status;
       if (winner) {
         status = 'Winner: ' + winner;
-     } else {
+      } else {
         status = 'Next player: ' + (this.state.xIsNext? 'X' : 'O');
-    }
+      }
+
+      let sort;
+      if (this.state.ascending) {
+          sort = 'Sort by descending';
+      } else {
+          sort = 'Sort by ascending';
+      }
 
       return (
         <div className="game">
@@ -123,6 +140,7 @@ import './index.css';
             />
           </div>
           <div className="game-info">
+            <button onClick={() => this.changeSort()}>{sort}</button>
             <div>{status}</div>
             <ol>{moves}</ol>
           </div>
